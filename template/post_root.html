@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>Post</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' href='/static/css/reset.css'>
+    <link rel='stylesheet' type='text/css' href='/static/css/thema.css'>
+    <link rel='stylesheet' type='text/css' href='/static/css/post_root.css'>
+    <script src='/static/js/post_root.js'></script>
+    <script src='/static/js/access.js'></script>
+</head>
+<body>
+    <header>
+        {% include "header.html" %}
+    </header>
+
+    <aside>
+        <section id="container-search">
+            Search
+            <form method="get" action="/post/search">
+                <input type="text" name="target" placeholder="search...">
+                <input type="submit">
+            </form>
+        </section>
+
+        <section id="container-category">
+            Category
+            {% for c in categories %}
+            <a class="search-by" data-target="category" data-id="{{ c.id }}">{{ c.name }}</a>
+            {% endfor %}
+        </section>
+
+        <section id="container-tag">
+            Tag
+            {% for t in tags %}
+            <a class="search-by" data-target="tag" data-id="{{ t.id }}">{{ t.name }}</a>
+            {% endfor %}
+        </section>
+    </aside>
+    
+    <main>
+        <section id="container-post">
+            Posts
+            <ul id="post-ul">
+                {% for p in post_list %}
+                <li><article>
+                    <div class="col-left">
+                        <img src="/{{ p.thumbnail }}">
+                    </div>
+
+                    <div class="col-mid">
+                        <div class="row-top">
+                            <h3>{{ p.title }}</h3>
+                        </div>
+                        <div class="row-bot">
+                            <span>{{ p.summary }}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-right">
+                        <div class="row-top">
+                            <span>{{ p.account_name }}</span>
+                        </div>
+                        <div class="row-bot">
+                            <span>{{ p.created_at }}</span>
+                        </div>
+                    </div>
+                </article></li>
+                {% endfor %}
+            </ul>
+            <div id="pagination">
+                <button id="btn-pre">이전</button>
+                <label id="n_m">/</label>
+                <button id="btn-next">다음</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        {% include "footer.html" %}
+    </footer>
+</body>
+</html>

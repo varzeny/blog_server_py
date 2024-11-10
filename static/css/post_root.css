@@ -1,0 +1,91 @@
+/* post_root.css */
+
+body {
+
+}
+
+aside {
+    flex: 2;
+}
+section {
+    margin: 1rem;
+}
+    #container-search {
+
+    }
+        #container-search form {
+            display: flex;
+        }
+
+    #container-category {
+        display: flex;
+        flex-direction: column;
+    }
+    #container-tag {
+        display: flex;
+        flex-direction: column;
+    }
+        .search-by {
+            margin-left: 1rem;
+        }
+
+main {
+    flex: 8;
+}
+    #container-post{
+
+    }
+        #post-ul{}
+        #post-ul li{
+            width: 100%; height: 15vh;
+            margin-bottom: 1rem;
+        }
+            article{
+                width: 100%; height: 100%;
+                display: flex;
+                box-shadow: 4px 4px 8px gray;
+            }
+            article:hover{
+                transform: translateY(-4px);
+                box-shadow: 4px 4px 4px gray;
+            }
+                .col-left {
+                    flex: 3;
+                }
+                    .col-left img {
+                        width: 100%; height: 100%;
+                        object-fit: cover;
+                    }
+                .col-mid {
+                    flex: 5;
+                    display: flex;
+                    flex-direction: column;
+                    padding-left: 1rem; padding-right: 1rem;
+                }
+                    .row-top {
+                        overflow: hidden;
+                    }
+                    .row-bot {
+                        overflow: hidden;
+                    }
+                .col-right {
+                    flex: 2;
+                }
+                    .row-top {
+
+                    }
+                    .row-bot {
+
+                    }
+        #pagination {
+            display: flex;
+            justify-content: center;
+        }
+            #pagination button {
+                background-color: black;
+                color: gray;
+                border: none;
+            }
+            #pagination label {
+                margin-left: 1rem; margin-right: 1rem;
+            }

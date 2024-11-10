@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>Post</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' href='/static/css/reset.css'>
+    <link rel='stylesheet' type='text/css' href='/static/css/thema.css'>
+    <link rel='stylesheet' type='text/css' href='/static/css/post_write.css'>
+    <script src="/static/js/post_write.js"></script>
+    <script src='/static/js/access.js'></script>
+</head>
+
+<body>
+    <header>
+        {% include "header.html" %}
+    </header>
+
+    <aside>
+        <button class="tab-btn" id="btn-category">Category</button>
+        <button class="tab-btn" id="btn-tag">Tag</button>
+        <button class="tab-btn" id="btn-post">Post</button>
+    </aside>
+    
+    <main>
+
+        <section class="tab-content" id="content-category">
+            <form id="form-category" method="post" action="/post/write/category">
+                <label class="col1">New Category</label>
+                <input class="col2" type="text" name="name">
+                <input type="submit">
+            </form>
+        </section>
+
+
+        <section class="tab-content" id="content-tag">
+            <form id="form-tag" method="post" action="/post/write/tag">
+                <label class="col1">New Tag</label>
+                <input class="col2" type="text" name="name">
+                <input type="submit">
+            </form>
+        </section>
+
+
+        <section class="tab-content" id="content-post">
+            <form id="form-post" method="post" action="/post/write/post">
+                <label class="col1">Category</label>
+                <select class="col2" id="select-category" name="category">
+                    {% for c in categories %}
+                    <option value="{{c.id}}">{{c.name}}</option>
+                    {% endfor %}
+                </select>
+
+                <label class="col1">Title</label>
+                <input class="col2" type="text" name="title" required>
+
+                <label class="col1">Summary</label>
+                <input class="col2" type="text" name="summary">
+            
+                <label class="col1">Thumbnail</label>
+                <input class="col2" type="file" name="thumbnail">
+            
+                <label class="col1">Content</label>
+                <textarea class="col2" name="content" cols="10" rows="20" required></textarea>
+
+                <label class="col1">Tag</label>
+                <div class="col2" id="container-tags">
+                    {% for t in tags %}
+                    <label><input type="checkbox" name="tags" value="{{t.id}}">{{t.name}}</label>
+                    {% endfor %}
+                </div>
+
+                <label class="col1">State</label>
+                <div class="col2">
+                    <label for="state-0">비공개<input type="radio" name="state" id="state-0" value="0" checked></label>
+                    <label for="state-1">공개<input type="radio" name="state" id="state-1" value="1"></label>
+                </div>
+                <input class="col2" type="submit">
+            </form>
+        </section>
+
+
+
+    </main>
+
+    <footer>
+        {% include "footer.html" %}
+    </footer>
+</body>
+</html>

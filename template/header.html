@@ -1,0 +1,36 @@
+
+
+<div class="container-header">
+    <div class="header-banner">
+        <h1>Varzeny's Blog</h1>
+    </div>
+    <nav class="header-nav">
+        <ul>
+            <li>
+                <a href="https://varzeny.com" style="color: blueviolet;">V</a>
+            </li>
+
+            <li>
+                <a href="/">Home</a>
+            </li>
+
+            <li>
+                <a href="/post/">Post</a>
+            </li>
+
+            <li>
+                <a href="/profile/">Profile</a>
+            </li>
+            {% if roles == 3 or None %}
+            <li>
+                <a href="https://auth.varzeny.com/login/page">Login</a>
+            </li>
+            {% else %}
+            <li>
+                <a href="https://auth.varzeny.com/logout">LogOut</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+
+</div>

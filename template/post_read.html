@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>Post</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' href='/static/css/reset.css'>
+    <link rel='stylesheet' type='text/css' href='/static/css/thema.css'>
+    <link rel='stylesheet' type='text/css' href='/static/css/post_read.css'>
+    <!-- <script src='/static/js/post.js'></script> -->
+</head>
+<body>
+    <header>
+        {% include "header.html" %}
+    </header>
+
+    <aside>
+        <section id="container-search">
+            Search
+            <form method="get" action="/post/search">
+                <input type="text" name="target" placeholder="search...">
+                <input type="submit">
+            </form>
+        </section>
+
+        <section id="container-category">
+            Category
+        </section>
+
+        <section id="container-tag">
+            Tag
+        </section>
+    </aside>
+    
+    <main>
+        <section id="container-post">
+            Post
+        </section>
+    </main>
+
+    <footer>
+        {% include "footer.html" %}
+    </footer>
+</body>
+</html>

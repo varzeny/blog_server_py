@@ -1,0 +1,43 @@
+/* post_write.css */
+
+
+aside {
+    margin-left: 1rem;
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+}
+    .tab-btn {
+        width: 100%; height: 2rem;
+        margin-bottom: 1rem;
+        background-color: black;
+        color: gray;
+        border: none;
+        font-size: 1rem;
+    }
+    .tab-btn:hover{font-weight: bold; color: white;}
+
+main {
+    margin-right: 1rem;
+    flex: 8;
+}
+    .tab-content {
+        display: none;
+        flex-direction: column;
+    }
+        form {
+            display: grid;
+            grid-template-columns: [col1s] auto [col2s] 1fr;
+            grid-template-rows: auto;
+            grid-gap: 1rem;
+        }
+            .col1 {
+                grid-column: col1s;
+            }
+            .col2 {
+                grid-column: col2s;
+            }
+                #container-tags {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
+                }
