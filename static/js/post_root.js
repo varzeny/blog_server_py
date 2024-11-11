@@ -51,7 +51,7 @@ async function init() {
     PAGE.init();
 
     // 일단 포스트들 불러오기
-    
+    await search();
 }
 
 
@@ -68,29 +68,31 @@ async function search(target=null, id=null, page=0) {
         respData.post_list.forEach(p=>{
             const li = document.createElement("li")
             li.innerHTML = `
-                <article>
-                    <div class="col-left">
-                        <img src="/${p.thumbnail}">
-                    </div>
+                <a href="/post/read/${p.id}">
+                    <article>
+                        <div class="col-left">
+                            <img src="/${p.thumbnail}">
+                        </div>
 
-                    <div class="col-mid">
-                        <div class="row-top">
-                            <h3>${p.title}</h3>
+                        <div class="col-mid">
+                            <div class="row-top">
+                                <h3>${p.title}</h3>
+                            </div>
+                            <div class="row-bot">
+                                <span>${p.summary}</span>
+                            </div>
                         </div>
-                        <div class="row-bot">
-                            <span>${p.summary}</span>
-                        </div>
-                    </div>
 
-                    <div class="col-right">
-                        <div class="row-top">
-                            <span>${p.account_name}</span>
+                        <div class="col-right">
+                            <div class="row-top">
+                                <span>${p.account_name}</span>
+                            </div>
+                            <div class="row-bot">
+                                <span>${p.created_at}</span>
+                            </div>
                         </div>
-                        <div class="row-bot">
-                            <span>${p.created_at}</span>
-                        </div>
-                    </div>
-                </article>
+                    </article>
+                </a>
             `
             PAGE.post_ul.appendChild(li)
         });

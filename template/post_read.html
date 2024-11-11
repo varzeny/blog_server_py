@@ -8,6 +8,7 @@
     <link rel='stylesheet' type='text/css' href='/static/css/thema.css'>
     <link rel='stylesheet' type='text/css' href='/static/css/post_read.css'>
     <!-- <script src='/static/js/post.js'></script> -->
+    <script src='/static/js/access.js'></script>
 </head>
 <body>
     <header>
@@ -35,6 +36,39 @@
     <main>
         <section id="container-post">
             Post
+            <article>
+                <div class="post-row" id="post-header">
+                    <div class="row-top">
+                        <h1>{{ post.title }}</h1>
+                    </div>
+                    <div class="row-mid">
+                        <p>{{ post.summary }}</p>
+                    </div>
+                    <div class="row-bot">
+                        <p>작성자: {{ post.account_name }}</p>
+                        <p>작성일: {{ post.created_at }}</p>
+                    </div>
+                </div>
+
+
+                <div class="post-row" id="post-content">
+                    <img src="/{{ post.thumbnail }}">
+                    <section>{{ post.content }}</section>
+                </div>
+
+
+                <div class="post-row" id="post-footer">
+                    <p>조회수: {{ post.view }}</p>
+                    <p>좋아요: {{ post.like }}</p>
+                </div>
+            </article>
+            
+
+
+        </section>
+
+        <section id="container-comment">
+
         </section>
     </main>
 

@@ -1,20 +1,23 @@
 /* post_root.css */
 
-body {
-
-}
-
 aside {
-    flex: 2;
+    flex: 3;
+    padding-left: 1rem; padding-right: 1rem;
 }
+    aside a:hover {
+        font-weight: bold;
+        cursor: pointer;
+    }
+
 section {
-    margin: 1rem;
+    margin-bottom: 1rem;
 }
     #container-search {
 
     }
         #container-search form {
             display: flex;
+            margin-left: 1rem;
         }
 
     #container-category {
@@ -30,7 +33,8 @@ section {
         }
 
 main {
-    flex: 8;
+    flex: 7;
+    padding-left: 1rem; padding-right: 1rem;
 }
     #container-post{
 
@@ -85,6 +89,7 @@ main {
                 background-color: black;
                 color: gray;
                 border: none;
+                display: none;
             }
             #pagination label {
                 margin-left: 1rem; margin-right: 1rem;

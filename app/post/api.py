@@ -2,13 +2,14 @@
 
 # lib
 import os, aiofiles, math
+from typing import Optional
 from fastapi import Depends, Query, UploadFile
 from fastapi.routing import APIRouter
 from fastapi.templating import Jinja2Templates
 from fastapi.requests import Request
 from fastapi.responses import Response, JSONResponse, RedirectResponse
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, delete, insert, update, func, desc
+from sqlalchemy import select, delete, insert, update, func, desc, text
 
 # module
 from app.core.config import SETTING
@@ -33,16 +34,6 @@ async def get_root(req:Request, ss:AsyncSession=Depends(DB.get_ss)):
 
     tags = await CRUD.read_tag(ss)
 
-    # post list
-    resp = await ss.execute( 
-        select(Post.state, Post.title, Post.thumbnail, Post.summary, Post.account_name, Post.created_at).where(Post.state==True)
-    )
-    respData = resp.mappings().fetchall()
-    print(respData)
-
-    for p in respData:
-        print( p )
-
     resp = template.TemplateResponse(
         request=req,
         name="post_root.html",
@@ -50,27 +41,22 @@ async def get_root(req:Request, ss:AsyncSession=Depends(DB.get_ss)):
             "roles":req.state.access_token.roles,
             "categories":categories,
             "tags":tags,
-            "post_list":respData,
         },
         status_code=200
     )
     return resp
 
 
-
 @router.get("/search")
 async def get_search(
     req:Request,
-    target:str = Query(..., min_length=1, max_length=50),
-    id:int = Query(...),
-    page:int = Query(...),
+    target:Optional[str] = Query(None, min_length=1, max_length=50),
+    id:Optional[str] = Query(None),
+    page:int|None = Query(0),
     ss:AsyncSession=Depends(DB.get_ss)
 ):
     try:
         print("taret : ", target, "id : ", id, "page : ", page)
-
-
-
         if target == "category":
             respCount = await ss.execute(
                 select( func.count() ).select_from(Post).where(Post.category_id==id)
@@ -79,9 +65,9 @@ async def get_search(
             pages = math.ceil( count / SETTING["app"]["post"]["pagesize"] )
 
             resp = await ss.execute( 
-                select(Post.state, Post.title, Post.thumbnail, Post.summary, Post.account_name, Post.created_at)
-                .join(PostTag, Post.id == PostTag.post_id)
-                .where(PostTag.tag_id==id)
+                select(Post.id, Post.state, Post.title, Post.thumbnail, Post.summary, Post.account_name, Post.created_at)
+                .where(Post.category_id==id)
+                .where(Post.state==True)
                 .order_by( desc(Post.updated_at) )
                 .offset(page*SETTING["app"]["post"]["pagesize"])
                 .limit(SETTING["app"]["post"]["pagesize"])
@@ -95,16 +81,30 @@ async def get_search(
             pages = math.ceil( count / SETTING["app"]["post"]["pagesize"] )
 
             resp = await ss.execute( 
-                select(Post.state, Post.title, Post.thumbnail, Post.summary, Post.account_name, Post.created_at)
+                select(Post.id, Post.state, Post.title, Post.thumbnail, Post.summary, Post.account_name, Post.created_at)
                 .join(PostTag, Post.id == PostTag.post_id)
                 .where(PostTag.tag_id==id)
+                .where(Post.state==True)
                 .order_by( desc(Post.updated_at) )
                 .offset(page*SETTING["app"]["post"]["pagesize"])
                 .limit(SETTING["app"]["post"]["pagesize"])
             )
 
         else:# 전체:생성일 기준 최근 5개
-            print("타겟 없음")
+            respCount = await ss.execute(
+                select( func.count() ).select_from(Post).where(Post.state==True)
+            )
+            count = respCount.scalar()
+            pages = math.ceil( count / SETTING["app"]["post"]["pagesize"] )
+
+            resp = await ss.execute( 
+                select(Post.id, Post.state, Post.title, Post.thumbnail, Post.summary, Post.account_name, Post.created_at)
+                .where(Post.state == True)
+                .order_by( desc(Post.updated_at) )
+                .offset(page*SETTING["app"]["post"]["pagesize"])
+                .limit(SETTING["app"]["post"]["pagesize"])
+            )
+
 
         respDate = [ {key: (value.isoformat() if isinstance(value, datetime) else value) for key, value in r.items()} for r in resp.mappings().fetchall() ]
         print("restData : ",respDate)
@@ -118,11 +118,26 @@ async def get_search(
 
 
 @router.get("/read/{post_id}")
-async def get_detail(req:Request, post_id:int):
+async def get_detail(req:Request, post_id:int, ss:AsyncSession=Depends(DB.get_ss)):
     print(post_id)
 
     # db에서 해당 포스트가 있으면
-    post = None
+    resp = await ss.execute(
+        select(Post).where(Post.id==post_id).where(Post.state==True)
+    )
+    respData = resp.scalar()
+    post = respData.__dict__
+    post.pop("_sa_instance_state")
+    post["created_at"] = post["created_at"].isoformat()
+    post["updated_at"] = post["updated_at"].isoformat()
+    print(post)
+
+    # 조회수 상승
+    await ss.execute(
+        statement=text("UPDATE post SET view=:view WHERE id=:id"),
+        params={"view":post["view"]+1, "id":post["id"]}
+    )
+    await ss.commit()
 
     # 페이지 반환
     resp = template.TemplateResponse(
@@ -133,6 +148,8 @@ async def get_detail(req:Request, post_id:int):
         },
         status_code=200
     )
+
+
     return resp
 
 
