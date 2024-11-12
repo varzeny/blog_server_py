@@ -21,6 +21,7 @@ async def get_root(req:Request):
         request=req,
         name="root.html",
         context={
+            "access_token":req.state.access_token,
             "roles":req.state.access_token.roles
         },
         status_code=200

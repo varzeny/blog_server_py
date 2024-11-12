@@ -7,15 +7,16 @@
     <link rel='stylesheet' type='text/css' href='/static/css/reset.css'>
     <link rel='stylesheet' type='text/css' href='/static/css/thema.css'>
     <link rel='stylesheet' type='text/css' href='/static/css/post_read.css'>
-    <!-- <script src='/static/js/post.js'></script> -->
+    <script src='/static/js/post_read.js'></script>
     <script src='/static/js/access.js'></script>
 </head>
 <body>
+    <meta id="meta" data-name="{{ access_token.name }}" data-post_id="{{post.id}}">
     <header>
         {% include "header.html" %}
     </header>
 
-    <aside>
+    <!-- <aside>
         <section id="container-search">
             Search
             <form method="get" action="/post/search">
@@ -31,12 +32,12 @@
         <section id="container-tag">
             Tag
         </section>
-    </aside>
+    </aside> -->
     
     <main>
         <section id="container-post">
             Post
-            <article>
+            <article id="post" data-id="{{ post.id }}">
                 <div class="post-row" id="post-header">
                     <div class="row-top">
                         <h1>{{ post.title }}</h1>
@@ -62,13 +63,24 @@
                     <p>좋아요: {{ post.like }}</p>
                 </div>
             </article>
-            
-
-
         </section>
 
-        <section id="container-comment">
+        <button id="btn-view-comment" data-post_id="{{ post.id }}">댓글 보기</button>
 
+        <section id="container-comment">
+            <div id="comments">
+                
+            </div>
+
+            <form id="comment-form" method="post" action="/post/write/comment">
+                <div id="comment-write-top">
+                    작성자 : {{ access_token.name }}
+                </div>
+                <div id="comment-write-bot">
+                    <input type="hidden" name="post_id" value="{{ post.id }}">
+                    <textarea name="content" required></textarea>
+                    <input type="submit">
+                </div>
         </section>
     </main>
 

@@ -67,7 +67,7 @@ class Comment(ORM.base):
     __tablename__="comment"
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     post_id: Mapped[int] = mapped_column(ForeignKey("post.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=False)
-    parent_id: Mapped[int] = mapped_column(ForeignKey("comment.id", ondelete="CASCADE", onupdate="CASCADE"), nullable=True)
+    parent_id: Mapped[int] = mapped_column(ForeignKey("comment.id", ondelete="CASCADE", onupdate="CASCADE"), default=None, nullable=True)
     account_id: Mapped[int] = mapped_column(Integer, nullable=False)
     account_name: Mapped[str] = mapped_column(String(45), nullable=False)
 
@@ -84,7 +84,7 @@ class Comment(ORM.base):
     post = relationship("Post", back_populates="comments")
 
     # 자기 참조 관계 설정 (대댓글을 위한 관계)
-    parent = relationship("Comment", remote_side=[id], backref="children", cascade="all, delete")
+    parent = relationship("Comment", remote_side=[id], backref="children")
 
 
 class PostTag(ORM.base):

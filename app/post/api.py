@@ -9,7 +9,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi.requests import Request
 from fastapi.responses import Response, JSONResponse, RedirectResponse
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, delete, insert, update, func, desc, text
+from sqlalchemy import select, delete, insert, update, func, desc, asc, text
 
 # module
 from app.core.config import SETTING
@@ -38,7 +38,7 @@ async def get_root(req:Request, ss:AsyncSession=Depends(DB.get_ss)):
         request=req,
         name="post_root.html",
         context={
-            "roles":req.state.access_token.roles,
+            "access_token":req.state.access_token,
             "categories":categories,
             "tags":tags,
         },
@@ -100,7 +100,7 @@ async def get_search(
             resp = await ss.execute( 
                 select(Post.id, Post.state, Post.title, Post.thumbnail, Post.summary, Post.account_name, Post.created_at)
                 .where(Post.state == True)
-                .order_by( desc(Post.updated_at) )
+                .order_by( desc(Post.created_at) )
                 .offset(page*SETTING["app"]["post"]["pagesize"])
                 .limit(SETTING["app"]["post"]["pagesize"])
             )
@@ -125,32 +125,36 @@ async def get_detail(req:Request, post_id:int, ss:AsyncSession=Depends(DB.get_ss
     resp = await ss.execute(
         select(Post).where(Post.id==post_id).where(Post.state==True)
     )
-    respData = resp.scalar()
-    post = respData.__dict__
-    post.pop("_sa_instance_state")
-    post["created_at"] = post["created_at"].isoformat()
-    post["updated_at"] = post["updated_at"].isoformat()
-    print(post)
+    respData = resp.scalar_one_or_none()
+    if not respData:
+        print("포스트 가져오기 실패")
+        return Response(status_code=400)
 
     # 조회수 상승
-    await ss.execute(
-        statement=text("UPDATE post SET view=:view WHERE id=:id"),
-        params={"view":post["view"]+1, "id":post["id"]}
-    )
+    respData.view += 1
     await ss.commit()
+
+    post = respData.__dict__
+
+    post.pop("_sa_instance_state")
+    post["created_at"] = post["created_at"].isoformat()
+    print(post)
+
 
     # 페이지 반환
     resp = template.TemplateResponse(
         request=req,
         name="post_read.html",
         context={
+            "access_token":req.state.access_token,
             "post":post
         },
         status_code=200
     )
 
-
     return resp
+
+
 
 
 
@@ -165,6 +169,7 @@ async def get_write(req:Request, at=Depends(admin_only), ss=Depends(DB.get_ss)):
         request=req,
         name="post_write.html",
         context={
+            "access_token":req.state.access_token,
             "categories":categories,
             "tags":tags
         },
@@ -241,3 +246,65 @@ async def post_write_post(req:Request, at=Depends(admin_only), ss=Depends(DB.get
         await ss.commit()
 
     return Response(status_code=200)
+
+
+
+
+
+
+
+# comment
+@router.post("/write/comment")
+async def post_write_comment(req:Request, at=Depends(user_only), ss:AsyncSession=Depends(DB.get_ss)):
+    # 폼내용 받기
+    formData = await req.form()
+
+    #db에 넣기
+    new_comment = Comment(
+        post_id=formData.get("post_id"),
+        parent_id=formData.get("parent_id") if formData.get("parent_id") else None, 
+        account_id = at.sub,
+        account_name = at.name,
+        content = formData.get("content"),
+    )
+    ss.add(new_comment)
+    await ss.commit()
+
+
+
+@router.get("/read/comment/{post_id}")
+async def get_read_comment(req:Request, post_id:int, ss:AsyncSession=Depends(DB.get_ss)):
+    # 코맨트 불러오기
+    resp = await ss.execute(
+        select(Comment)
+        .where(Comment.post_id==post_id)
+        .order_by( asc(Comment.created_at) )
+    )
+    respData = resp.scalars().all()
+    comments = []
+    for c in respData:
+        d = c.__dict__
+        d.pop("_sa_instance_state")
+        d["created_at"] = d["created_at"].isoformat()
+        d["updated_at"] = d["updated_at"].isoformat()
+        comments.append(d)
+    # print(comments)
+
+    return JSONResponse( content={"comments":comments}, status_code=200 )
+
+
+@router.get("/delete/comment/{comment_id}")
+async def get_delete_comment(req:Request, comment_id:int, at=Depends(user_only), ss:AsyncSession=Depends(DB.get_ss)):
+
+    result = await ss.execute(
+        select(Comment)
+        .where(Comment.id==comment_id)
+    )
+    comment = result.scalar_one_or_none()
+
+    if at.sub == comment.account_id:
+        await ss.delete(comment)
+        await ss.commit()
+        return Response(status_code=200)
+    else:
+        return Response(status_code=401)

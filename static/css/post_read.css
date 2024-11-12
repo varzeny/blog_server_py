@@ -37,22 +37,78 @@ img {
             .post-row {
                 margin-bottom: 1rem;
             }
-                .row-top {
+                .post-row .row-top {
                     display: flex;
                     justify-content: center;
                     font-size: 2rem;
                 }
-                .row-mid {
+                .post-row .row-mid {
                     display: flex;
                     justify-content: center;
                     margin-bottom: 1rem;
                 }
-                .row-bot {
+                .post-row .row-bot {
                     display: flex;
                     justify-content: space-between;
                 }
 
+    #btn-view-comment {
+        width: 100%; height: 2rem;
+        background-color: black; color: gray;
+        border: none;
+        box-shadow: 4px 4px 8px gray;
+    }
+    #btn-view-comment:hover {
+        transform: translateY(-4px);
+        box-shadow: 4px 4px 4px gray;
+    }
 
     #container-comment {
-
+        display: none;
     }
+        #comments {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            box-shadow: 4px 4px 8px gray;
+        }
+        #comment-form {
+            box-shadow: 4px 4px 8px gray;
+            padding: 1rem;
+        }
+            #comment-write-top {
+
+            }
+            #comment-write-bot {
+                display: flex;
+            }
+                #comment-write-bot textarea {
+                    width: 100%;
+                }
+                #comment-write-bot input {
+                    width: 5rem;
+                }
+        .comment {
+            width: 100%;
+            padding-left: 0.5rem; padding-top: 0.5rem; padding-bottom: 0.5rem;
+        }
+            .comment-top {
+                display: flex;
+            }
+                .comment-header {
+                    flex: 1;
+                }
+                .comment-body {
+                    flex: 8;
+                    padding-left: 1rem; padding-right: 1rem;
+                }
+                .comment-footer {
+                    flex: 1;
+                    display: flex;
+                    font-size: 0.5rem;
+                }
+                    .btn-comment-delete {
+                        margin-left: 0.5rem;
+                        background-color: black; color: grey;
+                    }
+
+        

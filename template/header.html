@@ -19,9 +19,9 @@
             </li>
 
             <li>
-                <a href="/profile/">Profile</a>
+            <a href="/profile/">Profile</a>
             </li>
-            {% if roles == 3 or None %}
+            {% if not access_token or access_token.roles==3 %}
             <li>
                 <a href="https://auth.varzeny.com/login/page">Login</a>
             </li>
