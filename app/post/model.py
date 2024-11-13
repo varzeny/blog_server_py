@@ -6,7 +6,7 @@ from sqlalchemy import Integer, String, Text, Boolean, TIMESTAMP, func, ForeignK
 from datetime import datetime
 
 # module
-from app.core.database.orm import ORM
+from app.core import ORM
 
 
 # define

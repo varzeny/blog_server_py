@@ -5,16 +5,16 @@ import os, aiofiles, math
 from typing import Optional
 from fastapi import Depends, Query, UploadFile
 from fastapi.routing import APIRouter
-from fastapi.templating import Jinja2Templates
 from fastapi.requests import Request
 from fastapi.responses import Response, JSONResponse, RedirectResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, delete, insert, update, func, desc, asc, text
 
 # module
-from app.core.config import SETTING
+from app.core.config.setting import SETTING
+from app.core.config.template import TEMPLATE
 from app.core.security.dependency import guest_only, user_only, admin_only
-from app.core.database.asyncmy import DB
+from app.core import DB
 from app.post import crud as CRUD
 from .model import *
 from .service import *
@@ -24,7 +24,6 @@ router = APIRouter(
     prefix="/post"
 )
 
-template = Jinja2Templates(directory="template")
 
 
 @router.get("/")
@@ -34,7 +33,7 @@ async def get_root(req:Request, ss:AsyncSession=Depends(DB.get_ss)):
 
     tags = await CRUD.read_tag(ss)
 
-    resp = template.TemplateResponse(
+    resp = TEMPLATE.TemplateResponse(
         request=req,
         name="post_root.html",
         context={
@@ -142,7 +141,7 @@ async def get_detail(req:Request, post_id:int, ss:AsyncSession=Depends(DB.get_ss
 
 
     # 페이지 반환
-    resp = template.TemplateResponse(
+    resp = TEMPLATE.TemplateResponse(
         request=req,
         name="post_read.html",
         context={
@@ -165,7 +164,7 @@ async def get_write(req:Request, at=Depends(admin_only), ss=Depends(DB.get_ss)):
 
     tags = await CRUD.read_tag(ss)
 
-    resp = template.TemplateResponse(
+    resp = TEMPLATE.TemplateResponse(
         request=req,
         name="post_write.html",
         context={

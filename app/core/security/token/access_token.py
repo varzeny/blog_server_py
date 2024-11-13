@@ -5,7 +5,7 @@ import jwt
 from datetime import datetime, timezone, timedelta
 
 # module
-from app.core.config import SETTING
+from app.core.config.setting import SETTING
 
 # define
 class AccessToken:

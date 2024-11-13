@@ -9,7 +9,7 @@ from fastapi.responses import Response
 from app.core.security.token.access_token import AccessToken
 
 # define
-class Manager(BaseHTTPMiddleware):
+class CheckAccessToken(BaseHTTPMiddleware):
     async def dispatch(self, req:Request, call_next):
         # 전처리
         encoded_access_token = req.cookies.get(AccessToken.key)

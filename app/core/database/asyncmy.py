@@ -4,7 +4,7 @@
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession, AsyncEngine
 
 # module
-from app.core.config import SETTING
+from app.core.config.setting import SETTING
 
 # define
 class Manager:

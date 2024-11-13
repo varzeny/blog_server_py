@@ -1,0 +1,58 @@
+/* profile_root.css */
+
+
+
+main {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+}
+
+#top {
+    flex: 2;
+}
+
+#bot {
+    flex: 8;
+    display: flex; flex-direction: column;
+    justify-content: center;
+}
+
+    #section-title {
+        color: white;
+        margin-bottom: 5rem;
+    }
+        #section-title h1 {
+            font-size: 4rem;
+        }
+        #section-title p {
+            font-size: 1rem;
+        }
+
+    #section-portrait {
+        padding-left: 3rem; padding-right: 3rem;
+    }
+        #timeline {
+            border: 1px solid white;
+        }
+        .event {
+            display: flex;
+            justify-content: center;
+        }
+        .event li {
+            width: 20%;
+            border: 1px solid white;
+        }
+        .event h2 {
+            color: white;
+        }
+        .event p {
+            font-style: italic;
+            font-weight: bold;
+        }
+            #event-top {
+                margin-right: 10%;
+                
+            }
+            #event-bot {
+                margin-left: 10%;
+            }

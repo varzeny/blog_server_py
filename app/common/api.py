@@ -3,21 +3,20 @@
 # lib
 from fastapi import Depends, Query
 from fastapi.routing import APIRouter
-from fastapi.templating import Jinja2Templates
 from fastapi.requests import Request
 from fastapi.responses import Response, JSONResponse, RedirectResponse, FileResponse
 
 # module
+from app.core.config.template import TEMPLATE
 
 # define
 router = APIRouter()
 
-template = Jinja2Templates(directory="template")
 
 
 @router.get("/")
 async def get_root(req:Request):
-    resp = template.TemplateResponse(
+    resp = TEMPLATE.TemplateResponse(
         request=req,
         name="root.html",
         context={
@@ -31,5 +30,5 @@ async def get_root(req:Request):
 
 @router.get("/favicon.ico")
 async def get_favicorn():
-    return FileResponse("static/image/favicon.ico")
+    return FileResponse("app/core/static/image/favicon.ico")
 
