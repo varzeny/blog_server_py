@@ -1,7 +1,6 @@
 # orm
 
 # lib
-import asyncio
 from sqlalchemy.ext.asyncio import AsyncAttrs
 from sqlalchemy.orm import DeclarativeBase
 
@@ -29,3 +28,5 @@ class Manager:
 
 ORM = Manager()
 print("ORM 생성됨")
+
+

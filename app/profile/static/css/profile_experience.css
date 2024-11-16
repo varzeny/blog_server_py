@@ -1,0 +1,40 @@
+/* profile_experience.css */
+
+aside h1 {
+    font-size: 4rem;
+    color: white;
+}
+
+main {
+    display: flex;
+}
+section {
+    display: flex; flex-direction: column;
+}
+h2 { 
+    font-size: 2rem; color: white;
+    text-align: center;
+}
+section ul {
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+}
+section li {
+    margin-top: 1rem;
+    font-weight: bold;
+}
+    #tool {
+        flex: 2;
+    }
+    #framework {
+        flex: 2;
+
+    }
+    #language {
+        flex: 2;
+
+    }
+    #robot {
+        flex: 2;
+
+    }

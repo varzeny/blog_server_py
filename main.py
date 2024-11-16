@@ -32,4 +32,12 @@ PROFILE.setup(app)
 
 
 
+# async def startup():
+#     await CORE.ORM.create_tables()
+
+
+# app.add_event_handler( event_type="startup", func=startup )
+
+
+
 

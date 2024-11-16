@@ -199,20 +199,22 @@ async def post_write_tag(req:Request, at=Depends(admin_only), ss=Depends(DB.get_
 async def post_write_post(req:Request, at=Depends(admin_only), ss=Depends(DB.get_ss)):
     formData = await req.form()
     print(formData)
-
+    
     today = datetime.today().strftime('%Y/%m/%d')
-    media_dir_path = os.path.join( "media", "post" )
-    post_dir_path = os.path.join(media_dir_path, today)
+    save_path = os.path.join( "app", "post", "media", today )
+    url_path = os.path.join( "post", "media", today )
 
-    # 저장할게 있는지? ex)썸네일, 첨부파일, 이미지 등 ###############################
     ## thumbnail
     thumbnail = formData.get("thumbnail")
-    thumbnail_path = os.path.join( media_dir_path, "thumbnail_default.png" )
+
     if thumbnail and thumbnail.filename:
-        os.makedirs(post_dir_path, exist_ok=True)
-        thumbnail_path = os.path.join( post_dir_path, thumbnail.filename )
-        async with aiofiles.open(thumbnail_path, "wb") as f:
+        os.makedirs(save_path, exist_ok=True)
+        thumbnail_save_path = os.path.join( save_path, thumbnail.filename )
+        thumbnail_url_path = os.path.join( url_path, thumbnail.filename )
+        async with aiofiles.open(thumbnail_save_path, "wb") as f:
             await f.write(await thumbnail.read())
+    else:
+        thumbnail_url_path = None
 
     ## etc
 
@@ -227,7 +229,7 @@ async def post_write_post(req:Request, at=Depends(admin_only), ss=Depends(DB.get
 
         title = formData.get("title"),
         summary = formData.get("summary"),
-        thumbnail = thumbnail_path,
+        thumbnail = thumbnail_url_path,
         content = formData.get("content"),
     )
 

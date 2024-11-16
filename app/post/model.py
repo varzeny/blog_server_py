@@ -40,7 +40,7 @@ class Post(ORM.base):
 
     title: Mapped[str] = mapped_column(String(255), nullable=False)
     summary: Mapped[str] = mapped_column(String(255), default="There is no summary.", nullable=True)
-    thumbnail: Mapped[str] = mapped_column(String(255), default="", nullable=True)
+    thumbnail: Mapped[str] = mapped_column(String(255), default="/post/media/thumbnail_default.png", nullable=True)
     content: Mapped[str] = mapped_column(Text, nullable=False)
 
     view: Mapped[int] = mapped_column(Integer, default=0, nullable=False)

@@ -1,0 +1,60 @@
+/* profile_project.css */
+
+body {
+    padding-left: 0; padding-right: 0;
+    overflow: hidden;
+
+}
+
+aside {
+    margin-left: 2rem;
+}
+main {
+    
+}
+    #container-projects {
+        width: 100%; height: 100%;
+        overflow: hidden;
+    }
+        #projects {
+            width: 100%; height: 100%;
+            display: flex;
+            align-items: flex-start; /* 세로 정렬 */
+            justify-content: flex-start; /* 가로 정렬 */
+            overflow-x: auto; /* 가로 스크롤 활성화 */
+            cursor: grab; /* 기본 마우스 커서 */
+            scrollbar-width: none;
+            overflow-y: hidden;
+        }
+            .project {
+                flex: 0 0 25vw; /* 고정 크기 설정 */
+                height: 50vh;
+                padding: 1rem;
+                box-shadow: 4px 4px 8px gray;
+                margin-right: 2rem;
+                background-color: rgba(0,0,0,0.5);
+            }
+            .project:hover {
+                transform: translateY(-8px);
+                box-shadow: 4px 4px 4px gray;
+
+            }
+                .project a {
+                    width: 100%; height: 100%;
+                }
+                .project p {
+
+                }
+                .project h2 {
+                    font-size: 1rem; color: white;
+                }
+                    .project-top {
+                        width: 100%; height: 50%;
+                    }
+                        .project img {
+                            width: 100%; height: 100%;
+                            object-fit: cover;
+                        }
+                    .project-bot {
+                        width: 100%; height: 50%;
+                    }

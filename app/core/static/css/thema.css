@@ -59,6 +59,11 @@ main, aside {
     padding-bottom: 4rem;
     width: 100%; height: 100%;
 }
+    input {
+        background-color: black;
+        border: 1px solid gray;
+        color: gray;
+    }
     textarea {
         background-color: black;
         border: 1px solid gray;

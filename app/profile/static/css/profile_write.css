@@ -1,0 +1,25 @@
+/* profile_write.css */
+
+main {
+    padding-top: 4rem;
+}
+
+label {
+    color: white;
+}
+
+.writer {
+    display: grid;
+    grid-template-columns: [col1s] auto [col2s] 1fr;
+    grid-template-rows: auto;
+    grid-gap: 1.5rem;
+    box-shadow: 4px 4px 8px gray;
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+    .col1 {
+        grid-column: col1s;
+    }
+    .col2 {
+        grid-column: col2s;
+    }

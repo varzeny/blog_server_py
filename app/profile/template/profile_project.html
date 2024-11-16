@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>Project</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' href='/core/static/css/reset.css'>
+    <link rel='stylesheet' type='text/css' href='/profile/static/css/thema_1.css'>
+    <link rel='stylesheet' type='text/css' href='/profile/static/css/profile_project.css'>
+    <script src='/profile/static/js/profile_project.js'></script>
+</head>
+<body>
+    <header>
+        {% include "profile_header.html" %}
+    </header>
+
+    <aside>
+        <h1>Project</h1>
+    </aside>
+
+    <main>
+        <section id="container-projects">
+            <ul id="projects">
+                {% for p in projects %}
+                <li class="project"><a href="{{ p.github }}" target="_blank">
+                    <div class="project-top">
+                        <img src="/{{ p.thumbnail }}">
+                    </div>
+                    <div class="project-bot">
+                        <h2>{{ p.title }}</h2>
+                        <p>{{ p.summary }}</p>
+                    </div>
+                </a></li>
+                {% endfor %}
+            </ul>
+        </section>
+
+    </main>
+
+
+</body>
+</html>
