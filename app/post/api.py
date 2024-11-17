@@ -89,7 +89,8 @@ async def get_search(
                 .limit(SETTING["app"]["post"]["pagesize"])
             )
 
-        else:# 전체:생성일 기준 최근 5개
+
+        elif target== "all":# 전체:생성일 기준 최근 5개
             respCount = await ss.execute(
                 select( func.count() ).select_from(Post).where(Post.state==True)
             )
@@ -102,6 +103,13 @@ async def get_search(
                 .order_by( desc(Post.created_at) )
                 .offset(page*SETTING["app"]["post"]["pagesize"])
                 .limit(SETTING["app"]["post"]["pagesize"])
+            )
+
+        else:
+            pages=1
+            resp = await ss.execute(
+                select(Post.id, Post.state, Post.title, Post.thumbnail, Post.summary, Post.account_name, Post.created_at)
+                .where(Post.title==target)
             )
 
 

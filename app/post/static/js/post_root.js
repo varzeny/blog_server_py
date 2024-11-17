@@ -7,13 +7,15 @@ const PAGE = {
     n_m:null,
     btnPre:null,
     btnNext:null,
+    searchBar:null,
     init:function(){
         // 태그 연결
         this.post_ul = document.getElementById("post-ul");
         this.pagination = document.getElementById("pagination");
         this.n_m = document.getElementById("n_m");
         this.btnPre = document.getElementById("btn-pre");
-        this.btnNext = document.getElementById("btn-next")
+        this.btnNext = document.getElementById("btn-next");
+        this.searchBar = document.getElementById("form-search");
 
         // a태그 가로채기
         document.querySelectorAll(".search-by").forEach(element => {
@@ -26,6 +28,18 @@ const PAGE = {
                 await search(target, id);
             })
         });
+
+        this.searchBar.addEventListener("submit", async(evt)=>{
+            evt.preventDefault();
+
+            const form = evt.target;
+            const formData = new FormData(form);
+            const target = formData.get("target");
+            console.log( target );
+            await search(target);
+        });
+
+
 
         // 버튼설정
         this.btnPre.addEventListener("click",async(evt)=>{
@@ -51,7 +65,7 @@ async function init() {
     PAGE.init();
 
     // 일단 포스트들 불러오기
-    await search();
+    await search("all");
 }
 
 

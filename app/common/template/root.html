@@ -8,6 +8,7 @@
     <link rel='stylesheet' type='text/css' href='/core/static/css/thema.css'>
     <link rel='stylesheet' type='text/css' href='/common/static/css/root.css'>
     <script src='/core/static/js/access.js'></script>
+    <script src='/common/static/js/root.js'></script>
 </head>
 <body>
     <header>
@@ -15,12 +16,76 @@
     </header>
     
     <main>
-        <section id="container-post">
-            Root
-            <ul id="">
-
+        <section class="container" id="continer-services">
+            <ul id="services">
+                <li class="service"><a target="_blank" href="https://webhard.varzeny.com">
+                    <img src="/common/static/image/webhard.png">
+                    <h3>Webhard</h3>
+                </a></li>
+    
+                <li class="service"><a target="_blank" href="https://pia.varzeny.com">
+                    <img src="/common/static/image/pia_icon.jpg">
+                    <h3>P.I.A</h3>
+                </a></li>
+    
+                <li class="service"><a target="_blank" href="https://maze.varzeny.com">
+                    <img src="/common/static/image/ds.ico">
+                    <h3>Maze</h3>
+                </a></li>
             </ul>
         </section>
+
+
+
+        <section class="container" id="container-widgets">
+            <ul id="widgets">
+
+                <li class="widget" id="owner">
+                    <h2>Owner State</h2>
+                    소속 : 없음<br>
+                    Location : 자택<br>
+                    state : 구직 중
+                </li>
+
+                
+                <li class="widget" id="top3">
+                    <h2>Top 3 Posts</h2>
+                    <a href="/post/read/{{ top3[0].id }}">
+                        <img src="{{ top3[0].thumbnail }}">
+                        <div>
+                            Top 1
+                            <h3>{{ (top3[0].title)[0:7] }}...</h3>
+                        </div>
+                    </a>
+
+                    <a href="/post/read/{{ top3[1].id }}">
+                        <img src="{{ top3[1].thumbnail }}">
+                        <div>
+                            Top 2
+                            <h3>{{ (top3[1].title)[0:7] }}...</h3>
+                        </div>
+                    </a>
+
+                    <a href="/post/read/{{ top3[2].id }}">
+                        <img src="{{ top3[2].thumbnail }}">
+                        <div>
+                            Top 3
+                            <h3>{{ (top3[2].title)[0:7] }}...</h3>
+                        </div>
+                    </a>
+                </li>
+
+
+                <li class="widget" id="pia">
+                    <h2>P.I.A</h2>
+                    <iframe src="https://pia.varzeny.com/widget/summary"></iframe>
+                </li>
+
+            </ul>
+
+
+        </section>
+
     </main>
 
     <footer>
