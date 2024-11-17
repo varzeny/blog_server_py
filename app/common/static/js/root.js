@@ -50,5 +50,8 @@ document.addEventListener("DOMContentLoaded", () => {
     widgets.addEventListener("dragstart", (e) => {
         e.preventDefault();
     });
+
+    // 스크롤바를 가운데로 이동
+    widgets.scrollLeft = (widgets.scrollWidth - widgets.clientWidth) / 2;
     ///////////////////////////////////////////////////////////////////////////////
 });

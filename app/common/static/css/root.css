@@ -43,9 +43,11 @@
 
 #container-widgets {
     width: 100%; height: auto;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
 }
     #widgets {
-        width: 100%; height: auto;
+        width: auto; height: auto;
         min-height: 20rem;
         display: flex;
         overflow-x: scroll;
@@ -55,7 +57,7 @@
         .widget {
             flex: 0 0 15rem; height: 19rem;
             box-shadow: 4px 4px 8px gray;
-            margin-right: 2rem;
+            margin-left: 1rem; margin-right: 1rem;
             padding: 1rem;
         }
             #top3 {
