@@ -52,7 +52,8 @@ img {
                 }
 
     #btn-view-comment {
-        width: 100%; height: 2rem;
+        width: 100%; height: auto;
+        font-size: 2rem;
         background-color: black; color: gray;
         border: none;
         box-shadow: 4px 4px 8px gray;
