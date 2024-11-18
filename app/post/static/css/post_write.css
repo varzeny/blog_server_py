@@ -1,6 +1,12 @@
 /* post_write.css */
 
 
+body {
+    display: flex;
+}::-webkit-scrollbar { display: none;}
+
+
+
 aside {
     margin-left: 1rem;
     flex: 2;
@@ -30,6 +36,7 @@ main {
             grid-template-columns: [col1s] auto [col2s] 1fr;
             grid-template-rows: auto;
             grid-gap: 1rem;
+            padding-bottom: 2rem;
         }
             .col1 {
                 grid-column: col1s;

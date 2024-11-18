@@ -1,5 +1,8 @@
 /* post_read */
 
+body {
+
+}::-webkit-scrollbar{ display: none; }
 
 main {
     width: 100%;
@@ -59,8 +62,7 @@ img {
         box-shadow: 4px 4px 8px gray;
     }
     #btn-view-comment:hover {
-        transform: translateY(-4px);
-        box-shadow: 4px 4px 4px gray;
+        color: white;
     }
 
     #container-comment {

@@ -45,13 +45,15 @@
                     <p>좋아요: {{ post.like }}</p>
                 </div>
             </article>
+
+            <button id="btn-view-comment" data-post_id="{{ post.id }}">댓글 보기</button>
+            
         </section>
 
-        <button id="btn-view-comment" data-post_id="{{ post.id }}">댓글 보기</button>
 
         <section id="container-comment">
             <div id="comments">
-                
+                현재 댓글이 없습니다. 댓글을 달아 보세요!
             </div>
 
             <form id="comment-form" method="post" action="/post/write/comment">

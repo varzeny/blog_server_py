@@ -111,7 +111,6 @@ async function init() {
 
 async function get_comments() {
     try{
-        PAGE.comments.innerHTML="";
         const post_id = document.getElementById("meta").dataset.post_id;
         const resp = await fetch(`/post/read/comment/${post_id}`, {method:"GET"});
         if(!resp.ok){ throw Error("서버 응답 오류") }
@@ -141,7 +140,10 @@ async function get_comments() {
                 </div>
             `;
 
-            if(!c.parent_id){ PAGE.comments.appendChild(d); }
+            if(!c.parent_id){
+                PAGE.comments.innerHTML="";
+                PAGE.comments.appendChild(d);
+            }
             else{ document.getElementById(c.parent_id).appendChild(d) }
         }
 
