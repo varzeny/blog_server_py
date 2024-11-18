@@ -1,5 +1,11 @@
 /* post_root.css */
 
+
+body {
+    display: flex;
+}
+
+
 aside {
     flex: 3;
     padding-left: 1rem; padding-right: 1rem;

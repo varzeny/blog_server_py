@@ -7,7 +7,6 @@ html {
 
 body {
     width: 100vw; height: 100vh;
-    display: flex;
     background-color: black;
     color: gray;
 }
@@ -57,7 +56,6 @@ header {
 
 main, aside {
     padding-top: 10rem; padding-bottom: 4rem;
-    width: 100%; height: 100%;
 }
     input {
         background-color: black;

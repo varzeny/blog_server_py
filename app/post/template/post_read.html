@@ -15,28 +15,11 @@
     <header>
         {% include "header.html" %}
     </header>
-
-    <!-- <aside>
-        <section id="container-search">
-            Search
-            <form method="get" action="/post/search">
-                <input type="text" name="target" placeholder="search...">
-                <input type="submit">
-            </form>
-        </section>
-
-        <section id="container-category">
-            Category
-        </section>
-
-        <section id="container-tag">
-            Tag
-        </section>
-    </aside> -->
     
     <main>
         <section id="container-post">
             <article id="post" data-id="{{ post.id }}">
+                
                 <div class="post-row" id="post-header">
                     <div class="row-top">
                         <h1>{{ post.title }}</h1>
