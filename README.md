@@ -26,7 +26,7 @@
 
 
 ## 구조
-
+![ERD](document/blog_erd.png)
 
 
 ## 상태
